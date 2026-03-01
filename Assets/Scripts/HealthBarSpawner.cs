@@ -5,6 +5,7 @@ public class HealthBarSpawner : MonoBehaviour
     public GameObject healthBarPrefab;
     private void Start()
     {
+        Debug.Log("HealthBarSpawner Start");
         SpawnForAll();
     }
     public void SpawnForAll()
