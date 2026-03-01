@@ -6,6 +6,12 @@ public class EnemyMovement : MonoBehaviour
     public Transform player;
     public int attackDamage = 1;
 
+    private void Start()
+    {
+        Vector3Int gridPos = Vector3Int.FloorToInt(transform.position);
+        GridManager.Instance.RegisterEntity(gameObject, gridPos);
+    }
+
     public void TakeTurn() { 
     Vector3 direction = player.position - transform.position;
     if(Mathf.Abs(direction.x)>Mathf.Abs(direction.z))

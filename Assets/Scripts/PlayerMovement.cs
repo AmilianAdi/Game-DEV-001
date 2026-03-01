@@ -4,6 +4,13 @@ public class PlayerMovement : MonoBehaviour
 {
     public float moveDistance = 1f;
     public int attackDamage = 2;
+
+    private void Start()
+    {
+        Vector3Int gridPos = Vector3Int.FloorToInt(transform.position);
+        GridManager.Instance.RegisterEntity(gameObject, gridPos);
+    }
+
     private void Update()
     {
         if (!TurnManager.Instance.isPlayerTurn)
@@ -34,9 +41,11 @@ public class PlayerMovement : MonoBehaviour
         if (GridManager.Instance.IsTileOccupied(newGridPos))
         {
             GameObject occupant = GridManager.Instance.GetEntityAt(newGridPos);
-            if (occupant.CompareTag("Enemy"))
+
+            if (occupant != null && occupant.CompareTag("Enemy"))
             {
-                occupant.GetComponent<Health>().TakeDamage(attackDamage);
+                Health hp = occupant.GetComponent<Health>();
+                if (hp != null) hp.TakeDamage(attackDamage);
                 TurnManager.Instance.EndPlayerTurn();
             }
             return;

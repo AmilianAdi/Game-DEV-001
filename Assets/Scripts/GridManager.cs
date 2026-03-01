@@ -4,6 +4,9 @@ using UnityEngine;
 public class GridManager : MonoBehaviour
 {
     public static GridManager Instance;
+    public int width = 10;
+    public int height = 10;
+
     private Dictionary<Vector3Int, GameObject> 
         grid = new Dictionary<Vector3Int, GameObject>();
     private void Awake()
@@ -30,5 +33,11 @@ public class GridManager : MonoBehaviour
     {
         grid.TryGetValue(gridPos, out GameObject entity);
         return entity;
+    }
+
+    public bool IsInsideGrid(Vector3Int pos)
+    {
+        return pos.x >= 0 && pos.x < width &&
+               pos.z >= 0 && pos.z < height;
     }
 }
