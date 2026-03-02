@@ -7,11 +7,13 @@ public class HealthBarUI : MonoBehaviour
     public Slider slider;
     public Vector3 offset = new Vector3(0, 2f, 0);
     private Camera cam;
-    private void Start()
+    private void OnEnable()
     {
         cam = Camera.main;
+
         if (slider == null)
-            slider = GetComponentInChildren<Slider>();
+            slider = GetComponentInChildren<Slider>(true);
+
         if (target != null && slider != null)
         {
             slider.maxValue = target.maxHealth;

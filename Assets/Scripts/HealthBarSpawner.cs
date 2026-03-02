@@ -24,7 +24,7 @@ public class HealthBarSpawner : MonoBehaviour
         ui.target = h;
         if (ui.slider == null)
         {
-            ui.slider = hb.GetComponentInChildren<UnityEngine.UI.Slider>();
+            ui.slider = hb.GetComponentInChildren<UnityEngine.UI.Slider>(true);
         }
     }
 }
