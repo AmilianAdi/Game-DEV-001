@@ -5,10 +5,16 @@ public class TurnManager : MonoBehaviour
 {
     public static TurnManager Instance;
     public bool isPlayerTurn = true;
+    public PlayerActionPoints playerAP;
     private void Awake()
     {
         Debug.Log("TurnManager Loaded");
         Instance = this;
+    }
+    private void Start()
+    {
+        if (playerAP != null)
+            playerAP.ResetForNewTurn();
     }
     public void EndPlayerTurn()
     {
@@ -25,6 +31,8 @@ public class TurnManager : MonoBehaviour
         }
         yield return new WaitForSeconds(0.3f);
         isPlayerTurn = true;
+        if (playerAP != null)
+            playerAP.ResetForNewTurn();
         Debug.Log("Player Turn");
     }
 }

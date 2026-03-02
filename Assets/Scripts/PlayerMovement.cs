@@ -4,9 +4,10 @@ public class PlayerMovement : MonoBehaviour
 {
     public float moveDistance = 1f;
     public int attackDamage = 2;
-
+    private PlayerActionPoints ap;
     private void Start()
     {
+        ap = GetComponent<PlayerActionPoints>();
         Vector3Int gridPos = Vector3Int.FloorToInt(transform.position);
         GridManager.Instance.RegisterEntity(gameObject, gridPos);
     }
@@ -15,12 +16,13 @@ public class PlayerMovement : MonoBehaviour
     {
         if (!TurnManager.Instance.isPlayerTurn)
             return;
+        if (ap != null && !ap.CanMove())
+            return;
 
         if (Input.GetKeyDown(KeyCode.W))
         {
             Move(Vector3.forward);
         }
-
         if (Input.GetKeyDown(KeyCode.S))
         {
             Move(Vector3.back);
@@ -36,6 +38,8 @@ public class PlayerMovement : MonoBehaviour
     }
     void Move(Vector3 direction)
     {
+        if (ap != null && !ap.CanMove())
+            return;
         Vector3 newPos = transform.position + direction * moveDistance;
         Vector3Int newGridPos = Vector3Int.FloorToInt(newPos);
         if (GridManager.Instance.IsTileOccupied(newGridPos))
@@ -46,14 +50,18 @@ public class PlayerMovement : MonoBehaviour
             {
                 Health hp = occupant.GetComponent<Health>();
                 if (hp != null) hp.TakeDamage(attackDamage);
-                TurnManager.Instance.EndPlayerTurn();
+                if (ap != null) ap.SpendMove();
+                if (ap != null && ap.movesLeft <= 0)
+                    TurnManager.Instance.EndPlayerTurn();
             }
             return;
         }
         Vector3Int oldGridPos = Vector3Int.FloorToInt(transform.position);
         GridManager.Instance.UnregisterEntity(oldGridPos);
-        transform.position= newPos;
+        transform.position = newPos;
         GridManager.Instance.RegisterEntity(gameObject, newGridPos);
-        TurnManager.Instance.EndPlayerTurn();
+        if (ap != null) ap.SpendMove();
+        if (ap != null && ap.movesLeft <= 0)
+            TurnManager.Instance.EndPlayerTurn();
     }
 }
