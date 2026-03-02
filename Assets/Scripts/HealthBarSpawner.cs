@@ -21,10 +21,7 @@ public class HealthBarSpawner : MonoBehaviour
         GameObject hb = Instantiate(healthBarPrefab);
         HealthBarUI ui = hb.GetComponent<HealthBarUI>();
         if (ui == null) ui = hb.AddComponent<HealthBarUI>();
-        ui.target = h;
-        if (ui.slider == null)
-        {
-            ui.slider = hb.GetComponentInChildren<UnityEngine.UI.Slider>(true);
-        }
+        ui.slider = hb.GetComponentInChildren<UnityEngine.UI.Slider>(true);
+        ui.Bind(h);
     }
 }
