@@ -61,7 +61,7 @@ public class PlayerMovement : MonoBehaviour
         transform.position = newPos;
         GridManager.Instance.RegisterEntity(gameObject, newGridPos);
         if (ap != null) ap.SpendMove();
-        if (ap != null && ap.movesLeft <= 0)
-            TurnManager.Instance.EndPlayerTurn();
+        //if (ap != null && ap.movesLeft <= 0)
+            //TurnManager.Instance.EndPlayerTurn();
     }
 }
