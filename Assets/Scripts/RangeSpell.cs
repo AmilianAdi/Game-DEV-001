@@ -25,7 +25,7 @@ public class RangeSpell : MonoBehaviour
                     float dist = Vector3.Distance(transform.position, enemyHealth.transform.position);
                     if (dist <= range)
                     {
-                        enemyHealth.TakeDamage(damage);
+                        enemyHealth.TakeDamage(damage, DamageType.Spell);
                         Debug.Log("Spell hit!");
                         isTargeting = false;
                     }

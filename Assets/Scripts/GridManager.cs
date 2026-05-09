@@ -24,6 +24,24 @@ public class GridManager : MonoBehaviour
         if (grid.ContainsKey(oldPos))
             grid.Remove(oldPos);
     }
+    public void UnregisterEntity(GameObject entity)
+    {
+        Vector3Int keyToRemove = Vector3Int.zero;
+        bool found = false;
+
+        foreach (var pair in grid)
+        {
+            if (pair.Value == entity)
+            {
+                keyToRemove = pair.Key;
+                found = true;
+                break;
+            }
+        }
+
+        if (found)
+            grid.Remove(keyToRemove);
+    }
     public bool IsTileOccupied(Vector3Int gridPos)
     //TILE OCCUPIED
     {
@@ -34,7 +52,10 @@ public class GridManager : MonoBehaviour
         grid.TryGetValue(gridPos, out GameObject entity);
         return entity;
     }
-
+    public void ClearGrid()
+    {
+        grid.Clear();
+    }
     public bool IsInsideGrid(Vector3Int pos)
     {
         return pos.x >= 0 && pos.x < width &&

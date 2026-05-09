@@ -8,11 +8,20 @@ public class EnemyMovement : MonoBehaviour
 
     private void Start()
     {
+        if (player == null)
+        {
+            GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
+
+            if (playerObj != null)
+                player = playerObj.transform;
+        }
         Vector3Int gridPos = Vector3Int.FloorToInt(transform.position);
         GridManager.Instance.RegisterEntity(gameObject, gridPos);
     }
 
-    public void TakeTurn() { 
+    public void TakeTurn() {
+    if (player == null)
+            return;
     Vector3 direction = player.position - transform.position;
     if(Mathf.Abs(direction.x)>Mathf.Abs(direction.z))
         {
@@ -30,7 +39,9 @@ public class EnemyMovement : MonoBehaviour
             GameObject occupant = GridManager.Instance.GetEntityAt(newGridPos);
             if (occupant.CompareTag("Player"))
             {
-                occupant.GetComponent<Health>().TakeDamage(attackDamage);
+                Health playerHealth = occupant.GetComponent<Health>();
+                if (playerHealth != null)
+                    playerHealth.TakeDamage(attackDamage, DamageType.Melee);
             }
             return;
         }

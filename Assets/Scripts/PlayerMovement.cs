@@ -49,7 +49,7 @@ public class PlayerMovement : MonoBehaviour
             if (occupant != null && occupant.CompareTag("Enemy"))
             {
                 Health hp = occupant.GetComponent<Health>();
-                if (hp != null) hp.TakeDamage(attackDamage);
+                if (hp != null) hp.TakeDamage(attackDamage, DamageType.Melee);
                 if (ap != null) ap.SpendMove();
                 if (ap != null && ap.movesLeft <= 0)
                     TurnManager.Instance.EndPlayerTurn();

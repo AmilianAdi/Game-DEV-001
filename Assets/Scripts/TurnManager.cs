@@ -27,6 +27,7 @@ public class TurnManager : MonoBehaviour
         EnemyMovement[] enemies = FindObjectsOfType<EnemyMovement>();
         foreach (EnemyMovement enemy in enemies)
         {
+            if (enemy != null)
             enemy.TakeTurn();
         }
         yield return new WaitForSeconds(0.3f);
