@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class EnemyMovement : MonoBehaviour
 {
+    public int attackRangeTiles = 1;
     public float moveDistance = 1f;
     public Transform player;
     public int attackDamage = 1;
@@ -22,7 +23,9 @@ public class EnemyMovement : MonoBehaviour
     public void TakeTurn() {
     if (player == null)
             return;
-    Vector3 direction = player.position - transform.position;
+    if (TryAttackPlayerIfInRange())
+            return;
+        Vector3 direction = player.position - transform.position;
     if(Mathf.Abs(direction.x)>Mathf.Abs(direction.z))
         {
             direction = new Vector3(Mathf.Sign(direction.x), 0, 0);
@@ -49,5 +52,33 @@ public class EnemyMovement : MonoBehaviour
         GridManager.Instance.UnregisterEntity(oldGridPos);
         transform.position = newPos;
         GridManager.Instance.RegisterEntity(gameObject, newGridPos);
+    }
+
+    private bool TryAttackPlayerIfInRange()
+    {
+        if (player == null)
+            return false;
+
+        Vector3Int enemyPos = Vector3Int.FloorToInt(transform.position);
+        Vector3Int playerPos = Vector3Int.FloorToInt(player.position);
+
+        int distance =
+            Mathf.Abs(enemyPos.x - playerPos.x) +
+            Mathf.Abs(enemyPos.z - playerPos.z);
+
+        if (distance <= attackRangeTiles)
+        {
+            Health playerHealth = player.GetComponent<Health>();
+
+            if (playerHealth != null)
+            {
+                playerHealth.TakeDamage(attackDamage, DamageType.Melee);
+                Debug.Log($"{gameObject.name} attacked player for {attackDamage} damage.");
+            }
+
+            return true;
+        }
+
+        return false;
     }
 }

@@ -42,6 +42,24 @@ public class PlayerMovement : MonoBehaviour
             return;
         Vector3 newPos = transform.position + direction * moveDistance;
         Vector3Int newGridPos = Vector3Int.FloorToInt(newPos);
+        GameObject enemyOnTile = GetEnemyAtGridPosition(newGridPos);
+
+        if (enemyOnTile != null)
+        {
+            Health hp = enemyOnTile.GetComponent<Health>();
+
+            if (hp != null)
+                hp.TakeDamage(attackDamage, DamageType.Melee);
+
+            if (ap != null)
+                ap.SpendMove();
+
+            if (ap != null && ap.movesLeft <= 0)
+                TurnManager.Instance.EndPlayerTurn();
+
+            return;
+        }
+
         if (GridManager.Instance.IsTileOccupied(newGridPos))
         {
             GameObject occupant = GridManager.Instance.GetEntityAt(newGridPos);
@@ -63,5 +81,24 @@ public class PlayerMovement : MonoBehaviour
         if (ap != null) ap.SpendMove();
         //if (ap != null && ap.movesLeft <= 0)
             //TurnManager.Instance.EndPlayerTurn();
+    }
+    private GameObject GetEnemyAtGridPosition(Vector3Int gridPos)
+    {
+        EnemyMovement[] enemies = FindObjectsOfType<EnemyMovement>();
+
+        foreach (EnemyMovement enemy in enemies)
+        {
+            if (enemy == null)
+                continue;
+
+            Vector3Int enemyGridPos = Vector3Int.FloorToInt(enemy.transform.position);
+
+            if (enemyGridPos.x == gridPos.x && enemyGridPos.z == gridPos.z)
+            {
+                return enemy.gameObject;
+            }
+        }
+
+        return null;
     }
 }
