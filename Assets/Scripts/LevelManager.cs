@@ -1,12 +1,13 @@
 using System.Collections.Generic;
 using UnityEngine;
+
 public class LevelManager : MonoBehaviour
 {
     public static LevelManager Instance;
 
     [Header("Enemy Prefabs")]
-    public GameObject slimePrefab;
-    public GameObject lavaBatPrefab;
+    public GameObject basicSlimePrefab;
+    public GameObject strongSlimePrefab;
     public GameObject bossSlimePrefab;
 
     [Header("Spawn Points")]
@@ -15,41 +16,55 @@ public class LevelManager : MonoBehaviour
     [Header("Health Bars")]
     public GameObject healthBarPrefab;
 
+    [Header("UI")]
+    public GameObject victoryPanel;
+
     [Header("Progression")]
     public int currentRoom = 1;
-    public int newGamePlusLevel = 0;
 
     private List<GameObject> aliveEnemies = new List<GameObject>();
+
     private void Awake()
     {
         Instance = this;
     }
+
     private void Start()
     {
+        if (victoryPanel != null)
+            victoryPanel.SetActive(false);
+
         StartRoom(1);
     }
+
     public void StartRoom(int roomNumber)
     {
         currentRoom = roomNumber;
         ClearOldEnemies();
-        Debug.Log($"Starting Room {currentRoom}. New Game+ Level: {newGamePlusLevel}");
+
+        Debug.Log($"Starting Room {currentRoom}");
+
         if (roomNumber == 1)
         {
-            SpawnEnemy(slimePrefab, 0);
-            SpawnEnemy(slimePrefab, 1);
-            SpawnEnemy(slimePrefab, 2);
+            //3 basic slimes
+            SpawnEnemy(basicSlimePrefab, 0);
+            SpawnEnemy(basicSlimePrefab, 1);
+            SpawnEnemy(basicSlimePrefab, 2);
         }
         else if (roomNumber == 2)
         {
-            SpawnEnemy(lavaBatPrefab, 0);
-            SpawnEnemy(lavaBatPrefab, 1);
-            SpawnEnemy(slimePrefab, 2);
+            //2slimebig and 1 small
+            SpawnEnemy(strongSlimePrefab, 0);
+            SpawnEnemy(strongSlimePrefab, 1);
+            SpawnEnemy(basicSlimePrefab, 2);
         }
         else if (roomNumber == 3)
         {
+            //boss
             SpawnEnemy(bossSlimePrefab, 1);
         }
     }
+
     private void SpawnEnemy(GameObject prefab, int spawnIndex)
     {
         if (prefab == null)
@@ -58,38 +73,22 @@ public class LevelManager : MonoBehaviour
             return;
         }
 
-        if (spawnIndex >=enemySpawnPoints.Length || enemySpawnPoints[spawnIndex] == null)
+        if (enemySpawnPoints == null || spawnIndex >= enemySpawnPoints.Length || enemySpawnPoints[spawnIndex] == null)
         {
             Debug.LogWarning("Missing enemy spawn point.");
             return;
         }
 
-        GameObject enemy = Instantiate(prefab, enemySpawnPoints[spawnIndex].position, Quaternion.identity);
-        aliveEnemies.Add(enemy);
+        GameObject enemy = Instantiate(
+            prefab,
+            enemySpawnPoints[spawnIndex].position,
+            Quaternion.identity
+        );
 
-        ScaleEnemy(enemy);
+        aliveEnemies.Add(enemy);
         SpawnHealthBar(enemy);
     }
 
-    private void ScaleEnemy(GameObject enemy)
-    {
-        Health health = enemy.GetComponent<Health>();
-
-        if (health != null)
-        {
-            float hpMultiplier =Mathf.Pow(1.4f, newGamePlusLevel);
-            health.maxHealth = Mathf.RoundToInt(health.maxHealth * hpMultiplier);
-            health.currentHealth= health.maxHealth;
-            health.OnHealthChanged?.Invoke(health.currentHealth, health.maxHealth);
-        }
-        EnemyMovement movement = enemy.GetComponent<EnemyMovement>();
-
-        if (movement != null)
-        {
-            float damageMultiplier = Mathf.Pow(1.3f, newGamePlusLevel);
-            movement.attackDamage = Mathf.RoundToInt(movement.attackDamage * damageMultiplier);
-        }
-    }
     public void EnemyKilled(GameObject enemy)
     {
         aliveEnemies.Remove(enemy);
@@ -99,29 +98,40 @@ public class LevelManager : MonoBehaviour
         if (aliveEnemies.Count <= 0)
             RoomComplete();
     }
+
     private void RoomComplete()
     {
-        Debug.Log("Room complete. Choose an upgrade.");
+        Debug.Log($"Room {currentRoom} complete.");
 
-        if (UpgradeManager.Instance != null)
-            UpgradeManager.Instance.ShowUpgradeChoices();
+        if (currentRoom < 3)
+        {
+            if (UpgradeManager.Instance != null)
+                UpgradeManager.Instance.ShowUpgradeChoices();
+            else
+                ContinueToNextRoom();
+        }
         else
-            ContinueToNextRoom();
+        {
+            Victory();
+        }
     }
 
     public void ContinueToNextRoom()
     {
-        if (currentRoom < 3)
-            StartRoom(currentRoom + 1);
-        else
-            StartNewGamePlus();
+        Time.timeScale = 1f;
+        StartRoom(currentRoom + 1);
     }
-    private void StartNewGamePlus()
+
+    private void Victory()
     {
-        newGamePlusLevel++;
-        Debug.Log($"Boss defeated. Starting New Game+ {newGamePlusLevel}");
-        StartRoom(1);
+        Debug.Log("Boss defeated. Victory!");
+
+        if (victoryPanel != null)
+            victoryPanel.SetActive(true);
+
+        Time.timeScale = 0f;
     }
+
     private void ClearOldEnemies()
     {
         foreach (GameObject enemy in aliveEnemies)
@@ -137,6 +147,7 @@ public class LevelManager : MonoBehaviour
 
         aliveEnemies.Clear();
     }
+
     private void SpawnHealthBar(GameObject enemy)
     {
         if (healthBarPrefab == null)
