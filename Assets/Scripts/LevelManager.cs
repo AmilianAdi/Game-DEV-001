@@ -159,12 +159,17 @@ public class LevelManager : MonoBehaviour
     }
     public void EnemyKilled(GameObject enemy)
     {
-        aliveEnemies.Remove(enemy);
+        Debug.Log($"LevelManager received death: {enemy.name}");
 
-        Debug.Log($"Enemy killed. Remaining enemies: {aliveEnemies.Count}");
+        aliveEnemies.Remove(enemy);
+        aliveEnemies.RemoveAll(e => e == null);
+
+        Debug.Log($"Enemies remaining: {aliveEnemies.Count}");
 
         if (aliveEnemies.Count <= 0)
+        {
             RoomComplete();
+        }
     }
     private void RoomComplete()
     {

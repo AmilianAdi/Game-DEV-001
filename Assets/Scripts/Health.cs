@@ -52,17 +52,18 @@ public class Health : MonoBehaviour
             GridManager.Instance.UnregisterEntity(gridPos);
         }
 
-        if (isPlayer || CompareTag("Player"))
-        {
-            Debug.Log("GAME OVER");
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-            return;
-        }
-
         if (isEnemy || CompareTag("Enemy"))
         {
+            Debug.Log($"{gameObject.name} died. Notifying LevelManager.");
+
             if (LevelManager.Instance != null)
+            {
                 LevelManager.Instance.EnemyKilled(gameObject);
+            }
+            else
+            {
+                Debug.LogWarning("LevelManager.Instance is NULL. Enemy death cannot progress room.");
+            }
 
             Destroy(gameObject);
             return;
