@@ -3,24 +3,40 @@ using UnityEngine;
 public class HealthBarSpawner : MonoBehaviour
 {
     public GameObject healthBarPrefab;
-    private void Start()
+    public void RefreshAllHealthBars()
     {
-        Debug.Log("HealthBarSpawner Start");
-        SpawnForAll();
-    }
-    public void SpawnForAll()
-    {
-        Health[] all = FindObjectsOfType<Health>();
-        foreach (Health h in all)
+        if (healthBarPrefab == null)
         {
-            SpawnFor(h);
+            Debug.LogWarning("Health bar prefab missing.");
+            return;
+        }
+        HealthBarUI[] oldBars = FindObjectsOfType<HealthBarUI>();
+
+        foreach (HealthBarUI bar in oldBars)
+        {
+            if (bar != null)
+            {
+                Destroy(bar.gameObject);
+            }
+        }
+        Health[] allHealth = FindObjectsOfType<Health>();
+        foreach (Health h in allHealth)
+        {
+            if (h != null)
+            {
+                SpawnFor(h);
+            }
         }
     }
-    void SpawnFor(Health h)
+    private void SpawnFor(Health h)
     {
         GameObject hb = Instantiate(healthBarPrefab);
+
         HealthBarUI ui = hb.GetComponent<HealthBarUI>();
-        if (ui == null) ui = hb.AddComponent<HealthBarUI>();
+
+        if (ui == null)
+            ui = hb.AddComponent<HealthBarUI>();
+
         ui.slider = hb.GetComponentInChildren<UnityEngine.UI.Slider>(true);
         ui.Bind(h);
     }
