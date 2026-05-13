@@ -33,13 +33,20 @@ public class Health : MonoBehaviour
             Debug.Log($"{gameObject.name} resisted melee damage. Lava Bats can only be damaged by spells.");
             return;
         }
-
         currentHealth = Mathf.Clamp(currentHealth - damage, 0, maxHealth);
-
         Debug.Log($"{gameObject.name} took {damage} {damageType} damage. HP: {currentHealth}/{maxHealth}");
+        dmgFlash damageFlash = GetComponent<dmgFlash>();
 
+        if (damageFlash != null)
+        {
+            damageFlash.Flash();
+        }
+        DamageNumberSpawner numberSpawner = GetComponent<DamageNumberSpawner>();
+        if (numberSpawner != null)
+        {
+            numberSpawner.SpawnDamageNumber(damage);
+        }
         OnHealthChanged?.Invoke(currentHealth, maxHealth);
-
         if (currentHealth <= 0)
             Die();
     }
