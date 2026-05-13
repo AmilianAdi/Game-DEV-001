@@ -393,6 +393,28 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 75810100}
   m_CullTransparentMesh: 1
+--- !u!114 &123058325 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 905403739146381348, guid: dcf2da86d2c01d84fbb982e37be920db, type: 3}
+  m_PrefabInstance: {fileID: 1130744200127981408}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6feced00271f98c488f4b4a25b060710, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerActionPoints
+--- !u!114 &123058326 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3976655048809786742, guid: dcf2da86d2c01d84fbb982e37be920db, type: 3}
+  m_PrefabInstance: {fileID: 1130744200127981408}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19f4181f333aafb4cbdf8ccfd1549b1f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::RangeSpell
 --- !u!1 &126662881
 GameObject:
   m_ObjectHideFlags: 0
@@ -947,8 +969,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39535c88d2ac1f645af9bc70907ba837, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerTurnUI
-  ap: {fileID: 0}
-  rangedSpell: {fileID: 0}
+  ap: {fileID: 123058325}
+  rangedSpell: {fileID: 123058326}
   movesText: {fileID: 462867531}
   spellText: {fileID: 2033867783}
   castSpellButton: {fileID: 1258555409}
@@ -1072,8 +1094,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 379.8, y: -158.5}
-  m_SizeDelta: {x: 209.73, y: 40.22}
+  m_AnchoredPosition: {x: 419.39996, y: -181}
+  m_SizeDelta: {x: 263.27, y: 40.22}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &629371906
 MonoBehaviour:
@@ -1342,7 +1364,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 729554795}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1913484028}
+        m_TargetAssemblyTypeName: UpgradeManager, Assembly-CSharp
+        m_MethodName: UpgradeMeleeDamage
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &729554795
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1903,6 +1937,28 @@ RectTransform:
   m_AnchoredPosition: {x: -100, y: 50}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1109727596 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7319418635989863804, guid: dcf2da86d2c01d84fbb982e37be920db, type: 3}
+  m_PrefabInstance: {fileID: 1130744200127981408}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ded11667f5f75741ab28a718fe847c3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Health
+--- !u!114 &1109727597 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 21677859979854508, guid: dcf2da86d2c01d84fbb982e37be920db, type: 3}
+  m_PrefabInstance: {fileID: 1130744200127981408}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b652fde8b1c98c42998cbff7113188b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerMovement
 --- !u!1 &1144876382
 GameObject:
   m_ObjectHideFlags: 0
@@ -2006,7 +2062,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1144876386}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1913484028}
+        m_TargetAssemblyTypeName: UpgradeManager, Assembly-CSharp
+        m_MethodName: UpgradeMovement
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1144876386
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2148,7 +2216,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1223830067}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1913484028}
+        m_TargetAssemblyTypeName: UpgradeManager, Assembly-CSharp
+        m_MethodName: UpgradeMaxHealth
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1223830067
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2386,7 +2466,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 123058326}
         m_TargetAssemblyTypeName: RangeSpell, Assembly-CSharp
         m_MethodName: StartTargeting
         m_Mode: 1
@@ -2897,7 +2977,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1508995404}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1913484028}
+        m_TargetAssemblyTypeName: UpgradeManager, Assembly-CSharp
+        m_MethodName: UpgradeSpellDamage
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1508995404
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3518,7 +3610,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TurnManager
   isPlayerTurn: 1
-  playerAP: {fileID: 0}
+  playerAP: {fileID: 123058325}
 --- !u!114 &1913484027
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3544,11 +3636,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48f5e1f8e32b92041a2b940a288a8187, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UpgradeManager
-  upgradePanel: {fileID: 0}
-  playerMovement: {fileID: 0}
-  rangeSpell: {fileID: 0}
-  playerActionPoints: {fileID: 0}
-  playerHealth: {fileID: 0}
+  upgradePanel: {fileID: 126662881}
+  playerMovement: {fileID: 1109727597}
+  rangeSpell: {fileID: 123058326}
+  playerActionPoints: {fileID: 123058325}
+  playerHealth: {fileID: 1109727596}
 --- !u!114 &1913484029
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3659,7 +3751,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 379.8, y: -258.61}
+  m_AnchoredPosition: {x: 419.39996, y: -281.11}
   m_SizeDelta: {x: 525, y: 60}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2007642254
