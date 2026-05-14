@@ -4,6 +4,8 @@ public class PlayerMovement : MonoBehaviour
 {
     public float moveDistance = 1f;
     public int attackDamage = 2;
+    [Header("Camera Relative Movement")]
+    public Transform cameraPivot;
     private PlayerActionPoints ap;
     private void Start()
     {
@@ -21,19 +23,19 @@ public class PlayerMovement : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.W))
         {
-            Move(Vector3.forward);
+            Move(GetCameraRelativeDirection(Vector3.forward));
         }
         if (Input.GetKeyDown(KeyCode.S))
         {
-            Move(Vector3.back);
+            Move(GetCameraRelativeDirection(Vector3.back));
         }
         if (Input.GetKeyDown(KeyCode.D))
         {
-            Move(Vector3.right);
+            Move(GetCameraRelativeDirection(Vector3.right));
         }
         if (Input.GetKeyDown(KeyCode.A))
         {
-            Move(Vector3.left);
+            Move(GetCameraRelativeDirection(Vector3.left));
         }
     }
     void Move(Vector3 direction)
@@ -50,10 +52,8 @@ public class PlayerMovement : MonoBehaviour
 
             if (hp != null)
                 hp.TakeDamage(attackDamage, DamageType.Melee);
-
             if (ap != null)
                 ap.SpendMove();
-
             if (ap != null && ap.movesLeft <= 0)
                 TurnManager.Instance.EndPlayerTurn();
 
@@ -82,6 +82,30 @@ public class PlayerMovement : MonoBehaviour
         //if (ap != null && ap.movesLeft <= 0)
             //TurnManager.Instance.EndPlayerTurn();
     }
+    private Vector3 GetCameraRelativeDirection(Vector3 inputDirection)
+    {
+        if (cameraPivot == null)
+        {
+            return inputDirection;
+        }
+        Vector3 forward = cameraPivot.forward;
+        Vector3 right = cameraPivot.right;
+        forward.y = 0f;
+        right.y = 0f;
+        forward.Normalize();
+        right.Normalize();
+        Vector3 direction = (forward * inputDirection.z) + (right * inputDirection.x);
+        if (Mathf.Abs(direction.x) > Mathf.Abs(direction.z))
+        {
+            direction = new Vector3(Mathf.Sign(direction.x), 0f, 0f);
+        }
+        else
+        {
+            direction = new Vector3(0f, 0f, Mathf.Sign(direction.z));
+        }
+        return direction;
+    }
+
     private GameObject GetEnemyAtGridPosition(Vector3Int gridPos)
     {
         EnemyMovement[] enemies = FindObjectsOfType<EnemyMovement>();

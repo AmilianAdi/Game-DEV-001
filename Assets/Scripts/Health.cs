@@ -58,7 +58,20 @@ public class Health : MonoBehaviour
             Vector3Int gridPos = Vector3Int.FloorToInt(transform.position);
             GridManager.Instance.UnregisterEntity(gridPos);
         }
+        if (isPlayer || CompareTag("Player"))
+        {
+            Debug.Log("Player died. Showing defeat screen.");
 
+            if (EndScrreen.Instance != null)
+            {
+                EndScrreen.Instance.ShowDefeat();
+            }
+            else
+            {
+                Debug.LogWarning("EndScrreen.Instance is NULL. Cannot show defeat screen.");
+            }
+            return;
+        }
         if (isEnemy || CompareTag("Enemy"))
         {
             Debug.Log($"{gameObject.name} died. Notifying LevelManager.");
@@ -71,7 +84,6 @@ public class Health : MonoBehaviour
             {
                 Debug.LogWarning("LevelManager.Instance is NULL. Enemy death cannot progress room.");
             }
-
             Destroy(gameObject);
             return;
         }

@@ -196,11 +196,17 @@ public class LevelManager : MonoBehaviour
     private void Victory()
     {
         Debug.Log("Boss defeated. Victory!");
-
-        if (victoryPanel != null)
-            victoryPanel.SetActive(true);
-
-        Time.timeScale = 0f;
+        if (EndScrreen.Instance != null)
+        {
+            EndScrreen.Instance.ShowVictory();
+        }
+        else
+        {
+            Debug.LogWarning("EndScrreen.Instance is NULL. Falling back to old victory panel.");
+            if (victoryPanel != null)
+                victoryPanel.SetActive(true);
+            Time.timeScale = 0f;
+        }
     }
     private void ClearOldEnemies()
     {
