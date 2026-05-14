@@ -3284,7 +3284,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Bolt 1
+  m_text: Bolt
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -4527,6 +4527,11 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 5, y: 5, z: 1}
   m_Center: {x: 0, y: 2, z: 0}
+--- !u!137 &1846731183 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 1745365646405410518, guid: 7c2b2da8d7f6cda4ab4a94e5d1e616b3, type: 3}
+  m_PrefabInstance: {fileID: 1671838784}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1913484023
 GameObject:
   m_ObjectHideFlags: 0
@@ -5242,6 +5247,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 6817618147900219867, guid: e0b023588ac7b134581d9eea16d53fdf, type: 3}
+      propertyPath: targetRenderer
+      value: 
+      objectReference: {fileID: 1846731183}
     - target: {fileID: 7384178638266892992, guid: e0b023588ac7b134581d9eea16d53fdf, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.5
