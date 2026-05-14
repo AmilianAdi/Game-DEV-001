@@ -60,4 +60,21 @@ public class EndScrreen : MonoBehaviour
         Time.timeScale = 1f;
         Application.Quit();
     }
+    private void Update()
+    {
+        if (defeatPanel != null && defeatPanel.activeSelf)
+        {
+            if (Input.GetKeyDown(KeyCode.R) || Input.GetMouseButtonDown(0))
+            {
+                RestartGame();
+            }
+        }
+        if (victoryPanel != null && victoryPanel.activeSelf)
+        {
+            if (Input.GetKeyDown(KeyCode.R))
+            {
+                RestartGame();
+            }
+        }
+    }
 }
