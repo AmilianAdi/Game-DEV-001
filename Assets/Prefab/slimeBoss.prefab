@@ -102,6 +102,12 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 6fbcfa533f2186145ae96f13586641f5, type: 3}
       insertIndex: -1
       addedObject: {fileID: -4226321796457877712}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 6fbcfa533f2186145ae96f13586641f5, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: -781736141114511502}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 6fbcfa533f2186145ae96f13586641f5, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8234302974745631939}
   m_SourcePrefab: {fileID: 100100000, guid: 6fbcfa533f2186145ae96f13586641f5, type: 3}
 --- !u!1 &1555348037899831152 stripped
 GameObject:
@@ -217,3 +223,32 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::facePlayer
   player: {fileID: 0}
   rotateSpeed: 8
+--- !u!114 &-781736141114511502
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1555348037899831152}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 923a99dd215cf9a499c902b78a1d8175, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::dmgFlash
+  targetRenderer: {fileID: 0}
+  flashColor: {r: 1, g: 0, b: 0, a: 1}
+  flashDuration: 0.2
+--- !u!114 &8234302974745631939
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1555348037899831152}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2795c69ca3d2fa84699eafb7b84a3cda, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DamageNumberSpawner
+  damageNumberPrefab: {fileID: 2252793984200471402, guid: e742e0940baf4be4dafc7cfbad66d9d2, type: 3}
+  offset: {x: 0, y: 1.2, z: 0}
