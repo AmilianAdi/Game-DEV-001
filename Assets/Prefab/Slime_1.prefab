@@ -131,6 +131,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 445a3a3d587f310428158b4d3f507c48, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyMovement
+  attackRangeTiles: 1
   moveDistance: 1
   player: {fileID: 0}
   attackDamage: 1
